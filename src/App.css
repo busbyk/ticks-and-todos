@@ -1,38 +1,224 @@
-.App {
-  text-align: center;
+:root {
+  --clr-bg: #b57aff;
+  --clr-accent: #801dff;
+  --clr-neutral: #fff;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.ticks-container {
+  height: 400px;
+  overflow-y: scroll;
+  border: 1px solid gray;
+  flex-direction: column;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body,
+section {
+  background-color: var(--clr-bg);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+#root,
+section {
+  width: 100vw;
+  height: 100vh;
+}
+
+section {
+  display: flex;
+}
+
+.container {
+  display: flex;
+  flex-basis: 100%;
+  flex-direction: column;
+  padding-inline: 4rem;
+  padding-block: 1rem;
+}
+
+.container > * {
+  flex-basis: 30%;
+}
+
+.container.user-is-selected > * {
+  flex-basis: 10%;
+  transition: flex-basis 2s;
+}
+
+.container > * + * {
+  flex-basis: 70%;
+}
+
+.container.user-is-selected > * + * {
+  flex-basis: 90%;
+}
+
+#search-input,
+#search-results,
+#content-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-block: 1em;
+}
+
+#search-input {
+  justify-content: flex-end;
+}
+
+#search-input p {
+  color: var(--clr-neutral);
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-block: 0.8em;
+}
+
+#search-results {
+  justify-content: flex-start;
+}
+
+#search-input > div,
+#search-results > div {
+  display: flex;
+  padding: 0;
+  width: 60%;
+  border: 5px solid var(--clr-accent);
+}
+
+#search-input > div {
+  flex-direction: row;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  height: 2.5rem;
 }
 
-.App-link {
-  color: #61dafb;
+#search-results > div {
+  flex-direction: column;
+  justify-content: flex-start;
+  background-color: var(--clr-neutral);
+  color: var(--clr-accent);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#search-results > div > p {
+  padding-inline: 0.8em;
+}
+
+.search-result {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-inline: 0.8em;
+  padding-block: 0.8em;
+  cursor: pointer;
+}
+
+.search-result:hover {
+  background-color: var(--clr-accent);
+  color: var(--clr-neutral);
+}
+
+.search-result-name-container {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+  align-items: center;
+}
+
+.search-result-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  align-items: center;
+  margin-left: 1rem;
+}
+
+#search-results div > * > img {
+  border-radius: 100%;
+  height: 3rem;
+  -webkit-box-shadow: 0 0 0 3px var(--clr-accent);
+  -moz-box-shadow: 0 0 0 3px var(--clr-accent);
+  box-shadow: 0 0 0 3px var(--clr-accent);
+}
+
+#search-input div > * {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--clr-accent);
+  display: flex;
+  align-items: center;
+}
+
+#search-input button {
+  border: none;
+  background-color: white;
+  cursor: pointer;
+  color: var(--clr-accent);
+  padding-right: 0.7rem;
+}
+
+#search-input input {
+  caret-color: var(--clr-accent);
+  text-indent: 10px;
+  width: 100%;
+  border: none;
+}
+
+input:focus-visible,
+input:hover,
+input:visited,
+input:focus,
+input:active {
+  outline: none;
+  border: none;
+}
+
+.climber-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 5px solid var(--clr-accent);
+  color: var(--clr-neutral);
+  padding-inline: 1em;
+  padding-bottom: 1em;
+  margin-top: 2rem;
+  width: 30%;
+}
+
+.climber-card a {
+  text-decoration: none;
+  color: var(--clr-neutral);
+}
+
+.climber-card a:hover {
+  text-decoration: underline;
+}
+
+.emphasized-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5em;
+}
+
+.thumbnail-container {
+  height: 0;
+  margin-bottom: 2.5rem;
+}
+
+.climber-card img {
+  position: relative;
+  top: -3rem;
+  border-radius: 100%;
+  height: 5rem;
+  -webkit-box-shadow: 0 0 0 3px var(--clr-neutral);
+  -moz-box-shadow: 0 0 0 3px var(--clr-neutral);
+  box-shadow: 0 0 0 3px var(--clr-neutral);
+}
+
+.superlative-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 1em;
+}
+
+.superlative-container div {
+  border: 5px solid var(--clr-accent);
+  color: var(--clr-neutral);
+  padding: 1em;
 }
