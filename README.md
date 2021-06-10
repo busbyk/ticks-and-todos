@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/b2799b7f-3b7d-4bdb-a1d1-0c1e367be780/deploy-status)](https://app.netlify.com/sites/ticks-and-todos/deploys)
+
 # ticks-and-todos
 
 A React app that displays superlative climbs based on a user's Mountain Project ticks.
