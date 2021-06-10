@@ -3,8 +3,10 @@ const SuperlativeClimb = (props) => {
 
   return (
     <div>
-      <h2>{title}</h2>
-      <h3>{climb.Route}</h3>
+      <a href={climb.URL} target='_blank' rel='noreferrer'>
+        <h2>{title}</h2>
+        <h3>{climb.Route}</h3>
+      </a>
     </div>
   )
 }

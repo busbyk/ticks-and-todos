@@ -3,7 +3,7 @@ import defaultThumbnail from '../default-thumbnail.svg'
 import { IoMdPin } from 'react-icons/io'
 
 const SearchResult = (props) => {
-  const { result, setClimber } = props
+  const { result, setClimber, setLoading } = props
 
   function generateUseridUsername(userId) {
     const username = result.name.replace(' ', '-').toLowerCase()
@@ -11,11 +11,14 @@ const SearchResult = (props) => {
   }
 
   async function getUserTicks() {
+    setClimber(null)
+    setLoading(true)
     const ticks = await getTicks(generateUseridUsername(result.userId))
     setClimber({
       ...result,
       ticks: ticks,
     })
+    setLoading(false)
   }
 
   return (

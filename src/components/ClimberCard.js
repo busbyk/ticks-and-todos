@@ -2,7 +2,7 @@ const ClimberCard = (props) => {
   const { climber } = props
 
   return (
-    <div className='climber-card'>
+    <div className='climber-card box-shadow'>
       <div className='thumbnail-container'>
         <img src={climber.imgUrl} alt='user thumbnail' />
       </div>

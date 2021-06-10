@@ -12,6 +12,7 @@ function App() {
   const [searchResults, setSearchResults] = useState()
   const [climber, setClimber] = useState()
   const [superlatives, setSuperlatives] = useState()
+  const [loading, setLoading] = useState()
 
   useEffect(() => {
     if (climber) {
@@ -21,7 +22,9 @@ function App() {
 
   return (
     <section>
-      <div className={`container ${climber ? 'user-is-selected' : ''}`}>
+      <div
+        className={`container ${climber || loading ? 'user-is-selected' : ''}`}
+      >
         <div id='search-input'>
           <p>Search for a Mountain Project user to analyze their ticks</p>
           <SearchBar
@@ -29,7 +32,7 @@ function App() {
             setSearchResults={setSearchResults}
           />
         </div>
-        {searchResults && (
+        {searchResults && !loading && (
           <div id='search-results'>
             <div>
               {searchResults.length === 0 && <p>No users found</p>}
@@ -40,10 +43,16 @@ function App() {
                     setSearchResults(null)
                     setClimber(climber)
                   }}
+                  setLoading={setLoading}
                   key={idx}
                 />
               ))}
             </div>
+          </div>
+        )}
+        {loading && (
+          <div id='loading-container'>
+            <p>Loading...</p>
           </div>
         )}
         {climber && (

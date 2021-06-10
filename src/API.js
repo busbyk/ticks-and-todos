@@ -5,7 +5,7 @@ const openBetaClient = axios.create({
 })
 
 const mpSearchApiClient = axios.create({
-  baseURL: 'http://localhost:5000',
+  baseURL: 'https://mp-search-api.herokuapp.com/',
 })
 
 export const getTicks = async (mpUID) => {

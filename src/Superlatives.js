@@ -1,4 +1,7 @@
 export const generateSuperlatives = (ticks) => {
+  if (ticks.length === 0) {
+    return []
+  }
   return [
     {
       displayName: 'Most Recent Tick',

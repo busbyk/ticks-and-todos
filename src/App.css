@@ -53,11 +53,13 @@ section {
 
 #search-input,
 #search-results,
-#content-container {
+#content-container,
+#loading-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-block: 1em;
+  color: var(--clr-neutral);
 }
 
 #search-input {
@@ -180,7 +182,8 @@ input:active {
   width: 30%;
 }
 
-.climber-card a {
+.climber-card a,
+.superlative-container a {
   text-decoration: none;
   color: var(--clr-neutral);
 }
@@ -214,11 +217,22 @@ input:active {
   display: flex;
   flex-direction: row;
   width: 100%;
-  margin-top: 1em;
+  margin-top: 2em;
 }
 
 .superlative-container div {
   border: 5px solid var(--clr-accent);
   color: var(--clr-neutral);
   padding: 1em;
+}
+
+.superlative-container > div + * {
+  margin-left: 1em;
+}
+
+.superlative-container > div:hover {
+  cursor: pointer;
+  -webkit-box-shadow: 4px 4px 14px 0px var(--clr-accent);
+  -moz-box-shadow: 4px 4px 14px 0px var(--clr-accent);
+  box-shadow: 4px 4px 14px 0px var(--clr-accent);
 }
