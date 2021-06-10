@@ -236,3 +236,8 @@ input:active {
   -moz-box-shadow: 4px 4px 14px 0px var(--clr-accent);
   box-shadow: 4px 4px 14px 0px var(--clr-accent);
 }
+
+p.small {
+  margin-top: 2em;
+  font-size: 0.6em;
+}

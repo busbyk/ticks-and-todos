@@ -69,6 +69,12 @@ function App() {
                 ))}
               </div>
             )}
+            <div>
+              <p className='small'>
+                This app is still under development. More superlatives coming
+                soon!
+              </p>
+            </div>
           </div>
         )}
       </div>
