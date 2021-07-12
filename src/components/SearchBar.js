@@ -6,7 +6,7 @@ import { FaSearch } from 'react-icons/fa'
 const useridUsernameRegex = /([0-9]+\/.+)/g
 
 const SearchBar = (props) => {
-  const { setClimber, setSearchResults } = props
+  const { setClimber, setSearchResults, setLoading, setSearching } = props
   const [input, setInput] = useState()
 
   function handleChange(e) {
@@ -17,13 +17,17 @@ const SearchBar = (props) => {
     const isValidUseridUsername = useridUsernameRegex.test(input)
 
     if (isValidUseridUsername) {
+      setLoading(true)
       const ticks = await getTicks(input)
       setClimber({
         ticks: ticks,
       })
+      setLoading(false)
     } else {
+      setSearching(true)
       const searchResults = await getMpUserSearchResults(input)
       setSearchResults(searchResults)
+      setSearching(false)
     }
   }
 
