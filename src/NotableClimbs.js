@@ -1,4 +1,4 @@
-export const generateSuperlatives = (ticks) => {
+export const generateNotableClimbs = (ticks) => {
   if (ticks.length === 0) {
     return []
   }

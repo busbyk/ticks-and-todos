@@ -2,7 +2,7 @@
 
 # ticks-and-todos
 
-A React app that displays superlative climbs based on a user's Mountain Project ticks.
+A React app that displays notable climbs based on a user's Mountain Project ticks.
 
 Utilizes two APIs:
 

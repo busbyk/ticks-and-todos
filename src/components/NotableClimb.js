@@ -1,4 +1,4 @@
-const SuperlativeClimb = (props) => {
+const NotableClimb = (props) => {
   const { climb, title } = props
 
   return (
@@ -11,4 +11,4 @@ const SuperlativeClimb = (props) => {
   )
 }
 
-export default SuperlativeClimb
+export default NotableClimb

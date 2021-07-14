@@ -3,21 +3,21 @@ import SearchBar from './components/SearchBar'
 import SearchResult from './components/SearchResult'
 import ClimberCard from './components/ClimberCard'
 
-import { generateSuperlatives } from './Superlatives'
+import { generateNotableClimbs } from './NotableClimbs'
 
 import { useEffect, useState } from 'react'
-import SuperlativeClimb from './components/SuperlativeClimb'
+import NotableClimb from './components/NotableClimb'
 
 function App() {
   const [searchResults, setSearchResults] = useState()
   const [climber, setClimber] = useState()
-  const [superlatives, setSuperlatives] = useState()
+  const [notableClimbs, setNotableClimbs] = useState()
   const [loading, setLoading] = useState()
   const [searching, setSearching] = useState()
 
   useEffect(() => {
     if (climber) {
-      setSuperlatives(generateSuperlatives(climber.ticks))
+      setNotableClimbs(generateNotableClimbs(climber.ticks))
     }
   }, [climber])
 
@@ -65,12 +65,12 @@ function App() {
         {climber && (
           <div id='content-container'>
             <ClimberCard climber={climber} />
-            {superlatives && (
-              <div className='superlative-container'>
-                {superlatives.map((superlative, idx) => (
-                  <SuperlativeClimb
-                    title={superlative.displayName}
-                    climb={superlative.climb}
+            {notableClimbs && (
+              <div className='notable-climbs-container'>
+                {notableClimbs.map((notableClimb, idx) => (
+                  <NotableClimb
+                    title={notableClimb.displayName}
+                    climb={notableClimb.climb}
                     key={idx}
                   />
                 ))}
@@ -78,7 +78,7 @@ function App() {
             )}
             <div>
               <p className='small'>
-                This app is still under development. More superlatives coming
+                This app is still under development. More notable climbs coming
                 soon!
               </p>
             </div>

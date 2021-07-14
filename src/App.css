@@ -186,7 +186,7 @@ input:active {
 }
 
 .climber-card a,
-.superlative-container a {
+.notable-climbs-container a {
   text-decoration: none;
   color: var(--clr-neutral);
 }
@@ -216,7 +216,7 @@ input:active {
   box-shadow: 0 0 0 3px var(--clr-neutral);
 }
 
-.superlative-container {
+.notable-climbs-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -224,17 +224,17 @@ input:active {
   margin-top: 2em;
 }
 
-.superlative-container div {
+.notable-climbs-container div {
   border: 5px solid var(--clr-accent);
   color: var(--clr-neutral);
   padding: 1em;
 }
 
-.superlative-container > div + * {
+.notable-climbs-container > div + * {
   margin-left: 1em;
 }
 
-.superlative-container > div:hover {
+.notable-climbs-container > div:hover {
   cursor: pointer;
   -webkit-box-shadow: 4px 4px 14px 0px var(--clr-accent);
   -moz-box-shadow: 4px 4px 14px 0px var(--clr-accent);
