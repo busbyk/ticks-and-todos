@@ -1,6 +1,8 @@
 :root {
-  --clr-bg: #b57aff;
-  --clr-accent: #801dff;
+  --clr-purple: #845EC2;
+  --clr-accent: #296073;
+  --clr-blue: #3596B5;
+  --clr-light: #ADC5CF;
   --clr-neutral: #fff;
 }
 
@@ -13,7 +15,8 @@
 
 body,
 section {
-  background-color: var(--clr-bg);
+
+  background-image: linear-gradient(to right bottom, #3596b5, #1b8ec2, #3182cc, #5b73cd, #845ec2);
 }
 
 #root,
@@ -216,7 +219,8 @@ input:active {
 .superlative-container {
   display: flex;
   flex-direction: row;
-  width: 100%;
+  justify-content: center;
+  width: 60%;
   margin-top: 2em;
 }
 
