@@ -6,6 +6,7 @@ const NotableClimb = (props) => {
       <a href={climb.URL} target='_blank' rel='noreferrer'>
         <h2>{title}</h2>
         <h3>{climb.Route}</h3>
+        {climb.Rating}
       </a>
     </div>
   )
