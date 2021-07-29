@@ -1,15 +1,11 @@
 import axios from 'axios'
 
-const openBetaClient = axios.create({
-  baseURL: 'https://mp-api.openbeta.io',
-})
-
 const mpSearchApiClient = axios.create({
   baseURL: 'https://mp-search-api.herokuapp.com/',
 })
 
 export const getTicks = async (mpUID) => {
-  const res = await openBetaClient.get(`/ticks/${mpUID}`)
+  const res = await mpSearchApiClient.get(`/userTicks?user=${mpUID}`)
 
   if (res.status === 200) {
     return res.data
