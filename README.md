@@ -4,9 +4,8 @@
 
 A React app that displays notable climbs based on a user's Mountain Project ticks.
 
-Utilizes two APIs:
+Utilizes the following API as the backend:
 
-1. [OpenBeta](https://openbeta.io/)
 1. [mp-search-api](https://github.com/busbyk/mp-search-api)
 
 ## Getting Started
