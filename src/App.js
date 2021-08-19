@@ -3,10 +3,11 @@ import SearchBar from './components/SearchBar'
 import SearchResult from './components/SearchResult'
 import ClimberCard from './components/ClimberCard'
 
-import { generateNotableClimbs } from './NotableClimbs'
+import {generateNotableClimbs} from './NotableClimbs'
 
-import { useEffect, useState } from 'react'
+import {useEffect, useState} from 'react'
 import NotableClimb from './components/NotableClimb'
+import {pingApi} from './API'
 
 function App() {
   const [searchResults, setSearchResults] = useState()
@@ -14,6 +15,19 @@ function App() {
   const [notableClimbs, setNotableClimbs] = useState()
   const [loading, setLoading] = useState()
   const [searching, setSearching] = useState()
+  const [error, setError] = useState()
+
+  useEffect(() => {
+    console.log('Pinging backend to wake it up')
+    pingApi().catch((err) => {
+      setError(
+        "Well, this is embarrassing. Something is wrong with our backend and searches won't work right now. We'll get this back up and running shortly."
+      )
+      setTimeout(() => {
+        setError(null)
+      }, 10000)
+    })
+  }, [])
 
   useEffect(() => {
     if (climber) {
@@ -60,6 +74,13 @@ function App() {
         {loading && (
           <div id='loading-container'>
             <p>Loading...</p>
+          </div>
+        )}
+        {error && (
+          <div id='error-container'>
+            <div>
+              <p>{error}</p>
+            </div>
           </div>
         )}
         {climber && (

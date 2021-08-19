@@ -21,3 +21,22 @@ export const getMpUserSearchResults = async (userQuery) => {
     throw new Error("Oh jeez, something didn't go quite right")
   }
 }
+
+export const pingApi = async () => {
+  let timedOut = false
+  setTimeout(() => {
+    timedOut = true
+  }, 5000)
+
+  const res = await mpSearchApiClient.get(`/ping`)
+
+  if (res.status === 200) {
+    if (timedOut) {
+      console.log('Woke up sleeping beauty')
+    } else {
+      console.log('Backend already awake')
+    }
+  } else {
+    console.error("Couldn't get a response from the backend")
+  }
+}
