@@ -44,6 +44,8 @@ function App() {
           <p>
             {searching
               ? 'Searching...'
+              : climber
+              ? null
               : 'Search for a Mountain Project user to analyze their ticks'}
           </p>
           <SearchBar
