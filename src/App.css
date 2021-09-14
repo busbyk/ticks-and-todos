@@ -1,8 +1,8 @@
 :root {
-  --clr-purple: #845EC2;
+  --clr-purple: #845ec2;
   --clr-accent: #296073;
-  --clr-blue: #3596B5;
-  --clr-light: #ADC5CF;
+  --clr-blue: #3596b5;
+  --clr-light: #adc5cf;
   --clr-neutral: #fff;
 }
 
@@ -14,15 +14,22 @@
 }
 
 body,
-section {
-
-  background-image: linear-gradient(to right bottom, #3596b5, #1b8ec2, #3182cc, #5b73cd, #845ec2);
+html {
+  width: 100%;
+  height: 100%;
 }
 
-#root,
-section {
-  width: 100vw;
-  height: 100vh;
+#root {
+  height: 100%;
+  background-image: linear-gradient(
+    to right bottom,
+    #3596b5,
+    #1b8ec2,
+    #3182cc,
+    #5b73cd,
+    #845ec2
+  );
+  overflow-y: scroll;
 }
 
 section {
@@ -35,6 +42,13 @@ section {
   flex-direction: column;
   padding-inline: 4rem;
   padding-block: 1rem;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding-inline: 1rem;
+    padding-block: 0;
+  }
 }
 
 .container > * {
@@ -54,15 +68,34 @@ section {
   flex-basis: 90%;
 }
 
+@media (max-width: 600px) {
+  .container > * + * {
+    flex-basis: 90%;
+  }
+
+  .container.user-is-selected > * + * {
+    flex-basis: 90%;
+  }
+}
+
 #search-input,
 #search-results,
 #content-container,
-#loading-container {
+#loading-container,
+#error-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-block: 1em;
   color: var(--clr-neutral);
+}
+
+#error-container {
+  background-color: darkred;
+  color: white;
+  border-radius: 10px;
+  padding: 1rem 1.5rem;
+  margin-top: 2rem;
 }
 
 #search-input {
@@ -76,6 +109,14 @@ section {
   margin-block: 0.8em;
 }
 
+#search-input input {
+  border-radius: 5px 0 0 5px;
+}
+
+#search-input button {
+  border-radius: 0 5px 5px 0;
+}
+
 #search-results {
   justify-content: flex-start;
 }
@@ -86,6 +127,14 @@ section {
   padding: 0;
   width: 60%;
   border: 5px solid var(--clr-accent);
+  border-radius: 10px;
+}
+
+@media (max-width: 600px) {
+  #search-input > div,
+  #search-results > div {
+    width: 100%;
+  }
 }
 
 #search-input > div {
@@ -183,6 +232,7 @@ input:active {
   padding-bottom: 1em;
   margin-top: 2rem;
   width: 30%;
+  border-radius: 10px;
 }
 
 .climber-card a,
@@ -219,22 +269,41 @@ input:active {
 .notable-climbs-container {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  width: 60%;
+  width: 80%;
   margin-top: 2em;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.notable-climbs-container div {
+@media (max-width: 600px) {
+  .notable-climbs-container {
+    width: 100%;
+  }
+}
+
+.notable-climbs-container > div {
+  flex: 0 0 48%;
+  margin-bottom: 1rem;
+}
+
+.notable-climbs-container > div:nth-child(odd) {
+  margin-right: 1rem;
+}
+
+.notable-climb {
   border: 5px solid var(--clr-accent);
   color: var(--clr-neutral);
-  padding: 1em;
+  border-radius: 10px;
+  align-items: space-between;
+  padding-inline: 1rem;
+  padding-bottom: 1rem;
 }
 
-.notable-climbs-container > div + * {
-  margin-left: 1em;
+.notable-climb a {
+  height: 100%;
 }
 
-.notable-climbs-container > div:hover {
+.notable-climb:hover {
   cursor: pointer;
   -webkit-box-shadow: 4px 4px 14px 0px var(--clr-accent);
   -moz-box-shadow: 4px 4px 14px 0px var(--clr-accent);
@@ -244,4 +313,10 @@ input:active {
 p.small {
   margin-top: 2em;
   font-size: 0.6em;
+}
+
+@media (max-width: 600px) {
+  .notable-climbs-container h2 {
+    font-size: 22px;
+  }
 }

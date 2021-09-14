@@ -14,9 +14,13 @@ export const generateNotableClimbs = (ticks) => {
       climb: first(ticks),
     },
     {
-      displayName: 'Hardest Tick',
-      climb: hardest(ticks)
-    }
+      displayName: 'Hardest Tick (Rock)',
+      climb: hardestRock(ticks),
+    },
+    {
+      displayName: 'Easiest Tick (Rock)',
+      climb: easiestRock(ticks),
+    },
   ]
 }
 
@@ -28,17 +32,23 @@ const first = (ticks) => {
   return ticks[ticks.length - 1]
 }
 
-const hardest = (ticks) => {
+const hardestRock = (ticks) => {
   convertRatingsToLinearScale(ticks)
   const ticksByRating = sortTicksByRating(ticks)
-  const hardestTicks = ticksByRating[0]
-  const hardestTicksByDate = sortTicksByDate(hardestTicks)
-  return hardestTicksByDate[0]
+  const hardestTick = ticksByRating[ticksByRating.length - 1]
+  return hardestTick
+}
+
+const easiestRock = (ticks) => {
+  convertRatingsToLinearScale(ticks)
+  const ticksByRating = sortTicksByRating(ticks)
+  const hardestTick = ticksByRating[0]
+  return hardestTick
 }
 
 const convertRatingsToLinearScale = (ticks) => {
   ticks.forEach((tick, idx, arr) => {
-    const rating = tick.Rating;
+    const rating = tick.Rating
     const linearRating = convertToLinearRating(rating)
     arr[idx].linearRating = linearRating
   })
@@ -46,38 +56,118 @@ const convertRatingsToLinearScale = (ticks) => {
 
 const convertToLinearRating = (ydsRating) => {
   const match = ydsRating.match(reYdsRating)
-  const baseRating = match[1]
-  const modifier = (match.length > 2) ? match[2] : null
-  
-  let linearRating = 0;
-  let linearModifier;
 
-  if (baseRating <= 9) {
-    linearRating = baseRating
-  } else if (baseRating >9) {
-    linearRating = 9 + ((baseRating - 10) * 4)
+  if (match) {
+    const baseRating = match[1]
+    const modifier = match.length > 2 ? match[2] : null
 
-    if (modifier) {
-      // what type of modifer?
-      // if +/- 
-      //    type === plusOrMinus
-      // if c/d
-      //    type === inBetweenGrade
-      // else 
-      // switch case for a-d
+    let rating = 0
+
+    if (baseRating <= 9) {
+      rating = baseRating
+    } else if (baseRating > 9) {
+      rating = 9 + (baseRating - 10) * 4
     }
-  }
 
-  return {
-    linearRating,
-    linearModifier
+    return {
+      rating,
+      modifier,
+    }
+  } else {
+    return null
   }
 }
 
 const sortTicksByRating = (ticks) => {
   return ticks
+    .filter((tick) => tick.linearRating)
+    .sort((a, b) => {
+      if (a.linearRating.rating < b.linearRating.rating) {
+        return -1
+      }
+      if (a.linearRating.rating > b.linearRating.rating) {
+        return 1
+      }
+      if (a.linearRating.modifier && !b.linearRating.modifier) {
+        return 1
+      }
+      if (!a.linearRating.modifier && b.linearRating.modifier) {
+        return -1
+      }
+      if (a.linearRating.modifier && b.linearRating.modifier) {
+        console.log(
+          'comparing ' +
+            JSON.stringify(a.linearRating) +
+            ' with ' +
+            JSON.stringify(b.linearRating)
+        )
+        let modifierComparison = compareModifiers(
+          a.linearRating.modifier,
+          b.linearRating.modifier
+        )
+        if (modifierComparison > 1) {
+          return 1
+        }
+        if (modifierComparison < 1) {
+          return -1
+        }
+      }
+      return 0
+    })
+  // .sort((a, b) => {
+  //   console.log('comparing ' + a.linearRating + ' and ' + b.linearRating)
+  //   if (a.linearRating.rating === b.linearRating.rating) {
+  //     if (a.linearRating.modifier && !b.linearRating.modifer) {
+  //       return 1
+  //     }
+  //     if (!a.linearRating.modifier && b.linearRating.modifier) {
+  //       return -1
+  //     }
+  //     if (a.linearRating.modifier && b.linearRating.modifier) {
+  //       let modifierComparison = compareModifiers(
+  //         a.linearRating.modifer,
+  //         b.linearRating.modifer
+  //       )
+  //       if (modifierComparison > 1) {
+  //         return 1
+  //       }
+  //       if (modifierComparison < 1) {
+  //         return -1
+  //       }
+  //     }
+  //     return 0
+  //   }
+  //   return 0
+  // })
 }
 
 const sortTicksByDate = (ticks) => {
   return ticks
+}
+
+const orderOfModifierDifficulties = [
+  'minus',
+  'a',
+  'a/b',
+  'b',
+  'b/c',
+  'c',
+  'c/d',
+  'd',
+  'plus',
+]
+
+const compareModifiers = (modifierA, modifierB) => {
+  const modA = orderOfModifierDifficulties.findIndex(
+    (elem) => elem === modifierA
+  )
+  const modB = orderOfModifierDifficulties.findIndex(
+    (elem) => elem === modifierB
+  )
+
+  if (modA !== -1 && modB !== -1) {
+    return modA - modB
+  } else {
+    return 0
+  }
 }

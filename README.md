@@ -4,11 +4,19 @@
 
 A React app that displays notable climbs based on a user's Mountain Project ticks.
 
-Utilizes the following API as the backend:
+Utilizes (and depends on) the following API as the backend:
 
 1. [mp-search-api](https://github.com/busbyk/mp-search-api)
 
 ## Getting Started
 
+1. Create a `.env` file at the root of the project with the following contents:
+
+```
+REACT_APP_API_BASE_URL=http://localhost:5000/
+```
+
+You can run the [mp-search-api](https://github.com/busbyk/mp-search-api) at a different location and this env var should be updated accordingly.
+
 1. Run `npm install`
-2. Run `npm start`
+1. Run `npm start`
