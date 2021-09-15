@@ -91,11 +91,13 @@ function App() {
             {notableClimbs && (
               <div className='notable-climbs-container'>
                 {notableClimbs.map((notableClimb, idx) => (
-                  <NotableClimb
-                    title={notableClimb.displayName}
-                    climb={notableClimb.climb}
-                    key={idx}
-                  />
+                  <div>
+                    <NotableClimb
+                      title={notableClimb.displayName}
+                      climb={notableClimb.climb}
+                      key={idx}
+                    />
+                  </div>
                 ))}
               </div>
             )}

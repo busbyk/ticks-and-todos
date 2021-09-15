@@ -1,11 +1,12 @@
 const NotableClimb = (props) => {
-  const { climb, title } = props
+  const {climb, title} = props
 
   return (
-    <div>
+    <div className='notable-climb'>
       <a href={climb.URL} target='_blank' rel='noreferrer'>
         <h2>{title}</h2>
-        <p>{climb.Route}</p>
+        <h3>{climb.Route}</h3>
+        {climb.Rating}
       </a>
     </div>
   )
