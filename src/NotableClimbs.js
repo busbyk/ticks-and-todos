@@ -4,6 +4,11 @@ export const generateNotableClimbs = (ticks) => {
   if (ticks.length === 0) {
     return []
   }
+
+  convertRatingsToLinearScale(ticks)
+  const ticksGroupedByRoute = groupTicksByRoute(ticks)
+  const routesByRating = sortRoutesByRating(Object.values(ticksGroupedByRoute))
+
   return [
     {
       displayName: 'Most Recent Tick',
@@ -14,12 +19,16 @@ export const generateNotableClimbs = (ticks) => {
       climb: first(ticks),
     },
     {
-      displayName: 'Hardest Tick (Rock)',
-      climb: hardestRock(ticks),
+      displayName: 'Hardest Send (Rock)',
+      climb: hardestRockSend(routesByRating),
     },
     {
-      displayName: 'Easiest Tick (Rock)',
-      climb: easiestRock(ticks),
+      displayName: 'Easiest Send (Rock)',
+      climb: easiestRockSend(routesByRating),
+    },
+    {
+      displayName: 'Hardest Attempt (Rock)',
+      climb: hardestRockAttempt(routesByRating),
     },
   ]
 }
@@ -32,18 +41,30 @@ const first = (ticks) => {
   return ticks[ticks.length - 1]
 }
 
-const hardestRock = (ticks) => {
-  convertRatingsToLinearScale(ticks)
-  const ticksByRating = sortTicksByRating(ticks)
-  const hardestTick = ticksByRating[ticksByRating.length - 1]
-  return hardestTick
+const hardestRockSend = (routesByRating) => {
+  const sends = routesByRating.filter((route) => {
+    return (
+      route.ticks.findIndex(
+        (tick) => tick.Style === 'Lead' && tick['Lead Style'] !== 'Fell/Hung'
+      ) !== -1
+    )
+  })
+  return sends[sends.length - 1]
 }
 
-const easiestRock = (ticks) => {
-  convertRatingsToLinearScale(ticks)
-  const ticksByRating = sortTicksByRating(ticks)
-  const hardestTick = ticksByRating[0]
-  return hardestTick
+const hardestRockAttempt = (routesByRating) => {
+  const flails = routesByRating.filter((route) => {
+    return (
+      route.ticks.findIndex(
+        (tick) => tick.Style === 'Lead' && tick['Lead Style'] === 'Fell/Hung'
+      ) !== -1
+    )
+  })
+  return flails[flails.length - 1]
+}
+
+const easiestRockSend = (routesByRating) => {
+  return routesByRating[0]
 }
 
 const convertRatingsToLinearScale = (ticks) => {
@@ -78,7 +99,7 @@ const convertToLinearRating = (ydsRating) => {
   }
 }
 
-const sortTicksByRating = (ticks) => {
+const sortRoutesByRating = (ticks) => {
   return ticks
     .filter((tick) => tick.linearRating)
     .sort((a, b) => {
@@ -95,12 +116,6 @@ const sortTicksByRating = (ticks) => {
         return -1
       }
       if (a.linearRating.modifier && b.linearRating.modifier) {
-        console.log(
-          'comparing ' +
-            JSON.stringify(a.linearRating) +
-            ' with ' +
-            JSON.stringify(b.linearRating)
-        )
         let modifierComparison = compareModifiers(
           a.linearRating.modifier,
           b.linearRating.modifier
@@ -114,35 +129,6 @@ const sortTicksByRating = (ticks) => {
       }
       return 0
     })
-  // .sort((a, b) => {
-  //   console.log('comparing ' + a.linearRating + ' and ' + b.linearRating)
-  //   if (a.linearRating.rating === b.linearRating.rating) {
-  //     if (a.linearRating.modifier && !b.linearRating.modifer) {
-  //       return 1
-  //     }
-  //     if (!a.linearRating.modifier && b.linearRating.modifier) {
-  //       return -1
-  //     }
-  //     if (a.linearRating.modifier && b.linearRating.modifier) {
-  //       let modifierComparison = compareModifiers(
-  //         a.linearRating.modifer,
-  //         b.linearRating.modifer
-  //       )
-  //       if (modifierComparison > 1) {
-  //         return 1
-  //       }
-  //       if (modifierComparison < 1) {
-  //         return -1
-  //       }
-  //     }
-  //     return 0
-  //   }
-  //   return 0
-  // })
-}
-
-const sortTicksByDate = (ticks) => {
-  return ticks
 }
 
 const orderOfModifierDifficulties = [
@@ -170,4 +156,33 @@ const compareModifiers = (modifierA, modifierB) => {
   } else {
     return 0
   }
+}
+
+const groupTicksByRoute = (ticks) => {
+  const ticksByClimb = ticks.reduce((acc, tick) => {
+    if (!acc[tick.URL]) {
+      acc[tick.URL] = {
+        'Avg Stars': tick['Avg Stars'],
+        Length: tick.Length,
+        Location: tick.Location,
+        Notes: tick.Notes,
+        Rating: tick.Rating,
+        'Rating Code': tick['Rating Code'],
+        Route: tick.Route,
+        'Route Type': tick['Route Type'],
+        URL: tick.URL,
+        linearRating: tick.linearRating,
+        ticks: [],
+      }
+    }
+
+    acc[tick.URL].ticks.push({
+      'Lead Style': tick['Lead Style'],
+      Pitches: tick.Pitches,
+      Style: tick.Style,
+    })
+
+    return acc
+  }, {})
+  return ticksByClimb
 }
