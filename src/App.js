@@ -5,17 +5,37 @@ import ClimberCard from './components/ClimberCard'
 
 import {generateNotableClimbs} from './NotableClimbs'
 
-import {useEffect, useState} from 'react'
+import {useEffect, useState, useCallback} from 'react'
 import NotableClimb from './components/NotableClimb'
-import {pingApi} from './API'
+import {pingApi, getTicks, getMpUserInfo} from './API'
 
 function App() {
   const [searchResults, setSearchResults] = useState()
+  const [mpUseridUsername, setMpUseridUsername] = useState()
   const [climber, setClimber] = useState()
   const [notableClimbs, setNotableClimbs] = useState()
   const [loading, setLoading] = useState()
   const [searching, setSearching] = useState()
   const [error, setError] = useState()
+
+  const isValidUseridUsername = useCallback((useridUsername) => {
+    const useridUsernameRegex = /([0-9]+\/.+)/g
+    return useridUsernameRegex.test(useridUsername)
+  }, [])
+
+  const handleMpUseridUsernameChange = useCallback(
+    (useridUsername) => {
+      if (isValidUseridUsername(useridUsername)) {
+        setMpUseridUsername(useridUsername)
+      } else {
+        console.error('invalid mountain project userid/username combo')
+        setError(
+          "This user's user id and username does not match the expected format so we cannot retrieve their ticks."
+        )
+      }
+    },
+    [isValidUseridUsername]
+  )
 
   useEffect(() => {
     console.log('Pinging backend to wake it up')
@@ -30,7 +50,38 @@ function App() {
   }, [])
 
   useEffect(() => {
+    const url = new URL(window.location)
+    const useridUsernameSearchParam = url.searchParams.get('useridUsername')
+    if (useridUsernameSearchParam) {
+      handleMpUseridUsernameChange(useridUsernameSearchParam)
+    }
+  }, [handleMpUseridUsernameChange])
+
+  useEffect(() => {
+    const runEffect = async () => {
+      const url = new URL(window.location)
+      url.searchParams.set('useridUsername', mpUseridUsername)
+      window.history.pushState({}, '', url)
+
+      setClimber(null)
+      setLoading(true)
+      const ticks = await getTicks(mpUseridUsername)
+      const climberInfo = await getMpUserInfo(mpUseridUsername)
+      setClimber({
+        ...climberInfo,
+        ticks,
+      })
+      setLoading(false)
+    }
+
+    if (mpUseridUsername) {
+      runEffect()
+    }
+  }, [mpUseridUsername, isValidUseridUsername])
+
+  useEffect(() => {
     if (climber) {
+      setSearchResults(null)
       setNotableClimbs(generateNotableClimbs(climber.ticks))
     }
   }, [climber])
@@ -41,18 +92,16 @@ function App() {
         className={`container ${climber || loading ? 'user-is-selected' : ''}`}
       >
         <div id='search-input'>
-          <p>
-            {searching
-              ? 'Searching...'
-              : climber
-              ? null
-              : 'Search for a Mountain Project user to analyze their ticks'}
-          </p>
+          {searching ? (
+            <p>'Searching...'</p>
+          ) : climber ? null : (
+            <p>'Search for a Mountain Project user to analyze their ticks'</p>
+          )}
           <SearchBar
-            setClimber={setClimber}
             setSearchResults={setSearchResults}
-            setLoading={setLoading}
             setSearching={setSearching}
+            isValidUseridUsername={isValidUseridUsername}
+            handleMpUseridUsernameChange={handleMpUseridUsernameChange}
           />
         </div>
         {searchResults && !loading && (
@@ -62,11 +111,7 @@ function App() {
               {searchResults.map((result, idx) => (
                 <SearchResult
                   result={result}
-                  setClimber={(climber) => {
-                    setSearchResults(null)
-                    setClimber(climber)
-                  }}
-                  setLoading={setLoading}
+                  setMpUseridUsername={setMpUseridUsername}
                   key={idx}
                 />
               ))}

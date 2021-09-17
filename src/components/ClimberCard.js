@@ -1,5 +1,5 @@
 const ClimberCard = (props) => {
-  const { climber } = props
+  const {climber} = props
 
   return (
     <div className='climber-card box-shadow'>
@@ -15,6 +15,7 @@ const ClimberCard = (props) => {
           {climber.name}
         </a>
       </div>
+      {climber.location && <p>{climber.location}</p>}
       <div>Number of ticks: {climber.ticks.length}</div>
     </div>
   )

@@ -1,28 +1,20 @@
-import { getTicks } from '../API'
 import defaultThumbnail from '../default-thumbnail.svg'
-import { IoMdPin } from 'react-icons/io'
+import {IoMdPin} from 'react-icons/io'
 
 const SearchResult = (props) => {
-  const { result, setClimber, setLoading } = props
+  const {result, setMpUseridUsername} = props
 
-  function generateUseridUsername(userId) {
+  const generateUseridUsername = (userId) => {
     const username = result.name.replace(' ', '-').toLowerCase()
     return `${userId}/${username}`
   }
 
-  async function getUserTicks() {
-    setClimber(null)
-    setLoading(true)
-    const ticks = await getTicks(generateUseridUsername(result.userId))
-    setClimber({
-      ...result,
-      ticks: ticks,
-    })
-    setLoading(false)
+  const handleClick = () => {
+    setMpUseridUsername(generateUseridUsername(result.userId))
   }
 
   return (
-    <div className='search-result' onClick={getUserTicks}>
+    <div className='search-result' onClick={handleClick}>
       <img
         src={
           result.imgUrl !== '/img/user/missing2.svg'
