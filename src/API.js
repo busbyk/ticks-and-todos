@@ -22,6 +22,14 @@ export const getMpUserSearchResults = async (userQuery) => {
   }
 }
 
+export const getMpUserInfo = async (mpUID) => {
+  const res = await mpSearchApiClient.get(`/userInfo?user=${mpUID}`)
+
+  if (res.status === 200) {
+    return res.data
+  } else return null
+}
+
 export const pingApi = async () => {
   let timedOut = false
   setTimeout(() => {

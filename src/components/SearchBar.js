@@ -1,12 +1,15 @@
-import { useState } from 'react'
-import { getTicks, getMpUserSearchResults } from '../API'
+import {useState} from 'react'
+import {getMpUserSearchResults} from '../API'
 
-import { FaSearch } from 'react-icons/fa'
-
-const useridUsernameRegex = /([0-9]+\/.+)/g
+import {FaSearch} from 'react-icons/fa'
 
 const SearchBar = (props) => {
-  const { setClimber, setSearchResults, setLoading, setSearching } = props
+  const {
+    setSearchResults,
+    setSearching,
+    isValidUseridUsername,
+    handleMpUseridUsernameChange,
+  } = props
   const [input, setInput] = useState()
 
   function handleChange(e) {
@@ -14,15 +17,8 @@ const SearchBar = (props) => {
   }
 
   async function handleSearch() {
-    const isValidUseridUsername = useridUsernameRegex.test(input)
-
-    if (isValidUseridUsername) {
-      setLoading(true)
-      const ticks = await getTicks(input)
-      setClimber({
-        ticks: ticks,
-      })
-      setLoading(false)
+    if (isValidUseridUsername(input)) {
+      handleMpUseridUsernameChange(input)
     } else {
       setSearching(true)
       const searchResults = await getMpUserSearchResults(input)
