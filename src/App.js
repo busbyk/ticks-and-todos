@@ -93,9 +93,9 @@ function App() {
       >
         <div id='search-input'>
           {searching ? (
-            <p>'Searching...'</p>
+            <p>Searching...</p>
           ) : climber ? null : (
-            <p>'Search for a Mountain Project user to analyze their ticks'</p>
+            <p>Search for a Mountain Project user to analyze their ticks</p>
           )}
           <SearchBar
             setSearchResults={setSearchResults}
