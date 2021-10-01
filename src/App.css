@@ -41,6 +41,11 @@ section {
   .container {
     padding-inline: 1rem;
     padding-block: 0;
+    padding-top: 1rem;
+  }
+
+  .climber-card {
+    width: 50% !important;
   }
 }
 
@@ -251,12 +256,12 @@ input:active {
 
 @media (max-width: 600px) {
   .notable-climbs-container {
-    width: 100%;
+    width: 100% !important;
   }
 }
 
 .notable-climbs-container > div {
-  flex: 0 0 48%;
+  flex: 0 0 45%;
   margin-bottom: 1rem;
 }
 
