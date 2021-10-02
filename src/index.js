@@ -11,7 +11,7 @@ const setViewHeight = () => {
 
 setViewHeight()
 
-window.addEventListener('resize', () => {
+window.addEventListener('resize touchmove', () => {
   setViewHeight()
 })
 
