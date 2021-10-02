@@ -12,7 +12,7 @@ const setViewHeight = () => {
 setViewHeight()
 
 window.addEventListener('resize', setViewHeight)
-window.addEventListener('touchmove', setViewHeight)
+window.addEventListener('touchend', setViewHeight)
 
 ReactDOM.render(
   <React.StrictMode>
