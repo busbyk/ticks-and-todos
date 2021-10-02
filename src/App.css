@@ -10,11 +10,11 @@ html,
 body {
   height: 100%;
   position: fixed;
+  background-color: var(--clr-purple);
 }
 
 #root {
   height: 100%;
-  /* height: calc(var(--vh, 1vh) * 100); */
   background-image: linear-gradient(
     to right bottom,
     #3596b5,
