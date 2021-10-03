@@ -8,8 +8,6 @@ const setViewHeight = () => {
   document.documentElement.style.setProperty('--vh', `${vh}px`)
 }
 
-setViewHeight()
-
 window.addEventListener('resize', setViewHeight)
 window.addEventListener('touchend', setViewHeight)
 
