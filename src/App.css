@@ -6,14 +6,17 @@
   --clr-neutral: #fff;
 }
 
+html,
 body,
+#root {
+  height: 100vh;
+}
+
 html {
-  width: 100%;
-  height: 100%;
+  background-color: var(--clr-blue);
 }
 
 #root {
-  height: 100%;
   background-image: linear-gradient(
     to right bottom,
     #3596b5,
@@ -41,6 +44,11 @@ section {
   .container {
     padding-inline: 1rem;
     padding-block: 0;
+    padding-top: 1rem;
+  }
+
+  .climber-card {
+    width: 50% !important;
   }
 }
 
@@ -60,6 +68,10 @@ section {
   align-items: center;
   margin-top: 2rem;
   color: var(--clr-neutral);
+}
+
+#content-container {
+  margin-bottom: 100px;
 }
 
 #error-container {
@@ -251,12 +263,12 @@ input:active {
 
 @media (max-width: 600px) {
   .notable-climbs-container {
-    width: 100%;
+    width: 100% !important;
   }
 }
 
 .notable-climbs-container > div {
-  flex: 0 0 48%;
+  flex: 0 0 45%;
   margin-bottom: 1rem;
 }
 

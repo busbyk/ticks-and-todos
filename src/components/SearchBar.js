@@ -32,7 +32,7 @@ const SearchBar = (props) => {
       <input
         type='text'
         onKeyUp={(e) => {
-          if (e.code === 'Enter') {
+          if (e.code === 'Enter' || e.keyCode === 13) {
             handleSearch()
           }
         }}
