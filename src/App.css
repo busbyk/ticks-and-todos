@@ -10,7 +10,6 @@ html,
 body,
 #root {
   height: 100vh;
-  height: calc(var(--vh, 1vh) * 100);
 }
 
 html {
@@ -69,6 +68,10 @@ section {
   align-items: center;
   margin-top: 2rem;
   color: var(--clr-neutral);
+}
+
+#content-container {
+  margin-bottom: 100px;
 }
 
 #error-container {
