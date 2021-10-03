@@ -7,20 +7,14 @@
 }
 
 body {
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
+  height: 100vh;
+  height: -webkit-fill-available;
 }
 html {
+  height: 100vh;
   height: -webkit-fill-available;
   background-color: var(--clr-blue);
 }
-
-/* html,
-body {
-  height: 100vh;
-  position: fixed;
-  background-color: var(--clr-blue);
-} */
 
 #root {
   height: 100%;
