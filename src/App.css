@@ -6,18 +6,18 @@
   --clr-neutral: #fff;
 }
 
-body {
+html,
+body,
+#root {
   height: 100vh;
   height: -webkit-fill-available;
 }
+
 html {
-  height: 100vh;
-  height: -webkit-fill-available;
   background-color: var(--clr-blue);
 }
 
 #root {
-  height: 100%;
   background-image: linear-gradient(
     to right bottom,
     #3596b5,
